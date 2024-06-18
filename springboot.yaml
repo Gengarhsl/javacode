@@ -18,7 +18,7 @@ spec:
         - name: harbor-registry		#使用我们的secret，即harbor-registry
       containers:
         - name: springboot
-          image: 192.168.71.134/jenkins/springboot:0.0.1
+          image: 192.168.71.134:1180/jenkins/springboot:0.0.1
           ports:
             - containerPort: 8080   #修改成你项目的端口
           imagePullPolicy: Always #镜像拉取策略：每次都拉去最新的镜像
