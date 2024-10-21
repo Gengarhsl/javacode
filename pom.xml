@@ -16,7 +16,7 @@
         <java.version>8</java.version>
 
         <!--换成你的harbor仓库地址-->
-        <docker.repostory>192.168.71.134:1180</docker.repostory>
+        <docker.repostory>192.168.88.200:1180</docker.repostory>
         <!--换成你的仓库项目名称-->
         <docker.registry.name>jenkins</docker.registry.name>
         <docker.image.tag>0.0.1</docker.image.tag>
