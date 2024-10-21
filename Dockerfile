@@ -1,5 +1,5 @@
 #添加依赖环境，前提是将Java8的Docker镜像从官方镜像仓库pull下来，然后上传到自己的Harbor私有仓库中
-FROM 192.168.71.134:1180/jenkins/java:8
+FROM 192.168.88.200:1180/jenkins/java:8
 #指定镜像制作作者，可自己随意设置
 MAINTAINER admin
 #运行目录
