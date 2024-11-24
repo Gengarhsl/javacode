@@ -1,0 +1,174 @@
+#spring.application.name=alipay-demo
+## ????? URL
+#spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=cpws_5_1_6_releases;slProtocol=TLSv1
+#
+## ??????
+#spring.datasource.username=sa
+#
+## ?????
+#spring.datasource.password=ztkj
+#
+## SQL Server JDBC ??
+#spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#
+## HikariCP ?????????
+#spring.datasource.hikari.maximum-pool-size=20
+#spring.datasource.hikari.minimum-idle=5
+#spring.datasource.hikari.idle-timeout=30000
+#spring.datasource.hikari.connection-timeout=30000
+#spring.datasource.hikari.max-lifetime=1800000
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.71.1:3306/test_db?serverTimezone=CST&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true #??????????????
+    username: root
+    password: 123456
+
+  redis: #redis配置
+    host: 192.168.71.134 #你的redis地址
+    port: 6379 #端口号
+    password: leadnews
+    database: 0
+    timeout: 1800000
+    # 根据实际情况配置 cluster 或者哨兵
+#    cluster:
+#      nodes:
+#    sentinel:
+#      master:
+#      nodes:
+    lettuce:
+     pool:
+       max-active: 1024 # 最大连接数
+       max-wait: -1 #最大阻塞等待时间(负数表示没限制)
+       max-idle: 200 #最大空闲连接
+       min-idle: 5 #最小空闲连接
+    redisson:
+      # 单节点配置
+      singleServerConfig:
+        # 连接空闲超时，单位：毫秒
+        idleConnectionTimeout: 10000
+        # 连接超时，单位：毫秒
+        connectTimeout: 10000
+        # 命令等待超时，单位：毫秒
+        timeout: 3000
+        # 命令失败重试次数,如果尝试达到 retryAttempts（命令失败重试次数） 仍然不能将命令发送至某个指定的节点时，将抛出错误。
+        # 如果尝试在此限制之内发送成功，则开始启用 timeout（命令等待超时） 计时。
+        retryAttempts: 3
+        # 命令重试发送时间间隔，单位：毫秒
+        retryInterval: 1500
+        # 密码
+        password: leadnews
+        # 单个连接最大订阅数量
+        subscriptionsPerConnection: 5
+        # 客户端名称
+        #clientName: axin
+        #  # 节点地址
+        address: redis://192.168.71.134:6379
+        # 发布和订阅连接的最小空闲连接数
+        subscriptionConnectionMinimumIdleSize: 1
+        # 发布和订阅连接池大小
+        subscriptionConnectionPoolSize: 50
+        # 最小空闲连接数
+        connectionMinimumIdleSize: 32
+        # 连接池大小
+        connectionPoolSize: 64
+        # 数据库编号
+        database: 6
+        # DNS监测时间间隔，单位：毫秒
+        dnsMonitoringInterval: 5000
+        # 线程池数量,默认值: 当前处理核数量 * 2
+        #threads: 0
+        # Netty线程池数量,默认值: 当前处理核数量 * 2
+        #nettyThreads: 0
+        # 编码
+    #      codec: !<org.redisson.codec.JsonJacksonCodec> { }
+        # 传输模式
+        transportMode: "NIO"
+      #多节点配置
+#  clusterServersConfig:
+#    idleConnectionTimeout: 10000
+#    connectTimeout: 10000
+#    timeout: 3000
+#    retryAttempts: 3
+#    retryInterval: 1500
+#    failedSlaveReconnectionInterval: 3000
+#    failedSlaveCheckInterval: 60000
+#    password: null
+#    subscriptionsPerConnection: 5
+#    clientName: null
+#    loadBalancer: !<org.redisson.connection.balancer.RoundRobinLoadBalancer> {}
+#    subscriptionConnectionMinimumIdleSize: 1
+#    subscriptionConnectionPoolSize: 50
+#    slaveConnectionMinimumIdleSize: 24
+#    slaveConnectionPoolSize: 64
+#    masterConnectionMinimumIdleSize: 24
+#    masterConnectionPoolSize: 64
+#    readMode: "SLAVE"
+#    subscriptionMode: "SLAVE"
+#    nodeAddresses:
+#      - "redis://127.0.0.1:7004"
+#      - "redis://127.0.0.1:7001"
+#      - "redis://127.0.0.1:7000"
+#    scanInterval: 1000
+#    pingConnectionInterval: 0
+#    keepAlive: false
+#    tcpNoDelay: false
+#    threads: 16
+#    nettyThreads: 32
+#    codec: !<org.redisson.codec.MarshallingCodec> {}
+#    transportMode: "NIO"
+#  1234567891011121314151617181920212223242526272829303132
+
+
+
+
+
+  kafka:
+    # Kafka服务地址
+    bootstrap-servers: 192.168.71.134:9092
+    consumer:
+      # 指定一个默认的组名
+      group-id: consumer-group1
+      #序列化反序列化
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      # 批量抓取
+      batch-size: 65536
+      # 缓存容量
+      buffer-memory: 524288
+# MyBatis
+mybatis:
+  # ???????
+  type-handlers-package: com.example.alipaydemo.controller.pojo
+  # ??mapper?????????mapper.xml????
+  mapperLocations: classpath:mybatis/*Mapper.xml
+
+
+#MQTT客户端
+publish:
+  mqtt:
+    host: tcp://192.168.71.134:1883
+    clientId: mqtt_publish
+    options:
+      userName: admin
+      password: public
+      # 这里表示会话不过期
+      cleanSession: false
+      # 配置一个默认的主题，加载时不会用到，只能在需要时手动提取
+      defaultTopic: devops
+      timeout: 1000
+      KeepAliveInterval: 10
+      #断线重连方式，自动重新连接与会话不过期配合使用会导致
+      #断线重新连接后会接收到断线期间的消息。需要更改设置请看password联系我
+      automaticReconnect: true
+      connectionTimeout: 3000
+      # 最大链接数
+      maxInflight: 100
+
+
+
+
+
